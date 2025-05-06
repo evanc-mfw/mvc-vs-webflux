@@ -10,9 +10,9 @@ class GameService(
     private val gameClient: GameClient,
     private val gameMetricService: GameMetricService
 ) {
-    fun getLatestGames(count: Int): Flux<GameResponse> {
+    fun getLatestGames(count: Int, host: String?): Flux<GameResponse> {
         val gameStream = Flux.merge(
-            (0..<count).map { gameClient.getLatestGame(null) }
+            (0..<count).map { gameClient.getLatestGame(host) }
         )
         return gameStream
             .collectList()
