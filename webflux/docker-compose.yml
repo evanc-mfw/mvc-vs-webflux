@@ -1,0 +1,17 @@
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=true
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=web_flux
+    volumes:
+      - db-store:/var/lib/mysql
+    ports:
+      - "5558:3306"
+
+
+volumes:
+  db-store:
+    driver: local
+

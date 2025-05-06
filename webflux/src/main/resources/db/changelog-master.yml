@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      relativeToChangelogFile: true
+      file: ./migrations/202505061145_initialize-db.yml
+  - include:
+      relativeToChangelogFile: true
+      file: ./migrations/202505061153_create-game-metrics.yml

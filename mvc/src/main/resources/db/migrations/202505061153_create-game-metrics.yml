@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202505061153
+      author: some.developer
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_game_metrics
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: developer
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: latest_count
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: game_metrics
+

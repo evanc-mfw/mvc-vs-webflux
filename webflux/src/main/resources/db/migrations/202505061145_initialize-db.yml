@@ -1,0 +1,66 @@
+databaseChangeLog:
+  - changeSet:
+      id: 202505061146
+      author: some.developer
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_access_logs
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: endpoint
+                  type: VARCHAR(255)
+              - column:
+                  name: request_body
+                  type: BLOB
+              - column:
+                  name: response_body
+                  type: BLOB
+              - column:
+                  constraints:
+                    nullable: false
+                  name: http_status_code
+                  type: INT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: access_logs
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_metrics
+                  name: id
+                  type: BIGINT
+              - column:
+                  name: trace_id
+                  type: VARCHAR(255)
+              - column:
+                  name: endpoint
+                  type: VARCHAR(255)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: execution_time
+                  type: BIGINT
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+            tableName: metrics
+

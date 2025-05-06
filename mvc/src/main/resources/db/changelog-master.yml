@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: ./db/migrations/202505061145_initialize-db.yml
+  - include:
+      file: ./db/migrations/202505061153_create-game-metrics.yml

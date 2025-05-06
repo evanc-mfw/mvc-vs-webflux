@@ -1,0 +1,21 @@
+server:
+  port: 9001
+management:
+  tracing:
+    sampling:
+      probability: 1
+spring:
+  datasource:
+    url: "jdbc:mysql://mysql.webflux.orb.local:3306/mvc"
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jooq:
+    sql-dialect: mysql
+  docker:
+    compose:
+      file: ./webflux/docker-compose.yml
+      lifecycle-management: start_only
+
+
+hosts:
+  games: "https://api.sampleapis.com"
