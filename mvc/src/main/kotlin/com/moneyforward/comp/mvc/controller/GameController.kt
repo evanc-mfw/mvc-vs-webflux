@@ -6,6 +6,8 @@ import com.moneyforward.comp.mvc.service.GameService
 import com.moneyforward.comp.shared.data.GameMetricQuery
 import com.moneyforward.comp.shared.data.GameResponse
 import org.springframework.data.web.PagedModel
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -21,8 +23,27 @@ class GameController(
     fun latestGames(
         @RequestParam(required = false)
         count: Int = 3
-    ): List<GameResponse> {
-        return gameService.getLatestGames(count)
+    ): ResponseEntity<List<GameResponse>> {
+        val games = gameService.getLatestGames(count)
+        var containsNulls = false
+
+        val nonNullGames = mutableListOf<GameResponse>()
+        for (game in games) {
+            if (game == null) {
+                containsNulls = true
+            }
+            else {
+                nonNullGames.add(game)
+            }
+        }
+
+        return if (nonNullGames.isEmpty()) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(nonNullGames)
+        } else if (containsNulls) {
+            ResponseEntity.status(HttpStatus.PARTIAL_CONTENT).body(nonNullGames)
+        } else {
+            ResponseEntity.status(HttpStatus.OK).body(nonNullGames)
+        }
     }
 
     @GetMapping("/metrics")

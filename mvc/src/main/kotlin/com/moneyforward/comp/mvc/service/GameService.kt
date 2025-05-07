@@ -16,7 +16,7 @@ class GameService(
     private val gameClient: GameClient,
     private val gameMetricService: GameMetricService,
 ) {
-    fun getLatestGames(count: Int): List<GameResponse> {
+    fun getLatestGames(count: Int): List<GameResponse?> {
         val host = DebugHostContext.host
         val context = MDC.getCopyOfContextMap()
         val games = runBlocking {
@@ -29,8 +29,9 @@ class GameService(
                 }.awaitAll()
             }
         }
+
         // made-up service requirement is to do this after we get all games
-        gameMetricService.updateOrCreateMetrics(games)
+        gameMetricService.updateOrCreateMetrics(games.mapNotNull { it })
         return games
     }
 }

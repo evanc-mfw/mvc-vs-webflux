@@ -24,9 +24,8 @@ class GameClient(
         try {
             return webClient.get()
                 .uri("$staticPath/${Random.nextInt(1000)}")
-                .exchangeToMono {
-                    it.bodyToMono(GameResponse::class.java)
-                }
+                .retrieve()
+                .bodyToMono(GameResponse::class.java)
         } finally {
             metricService.record(metric)
         }
