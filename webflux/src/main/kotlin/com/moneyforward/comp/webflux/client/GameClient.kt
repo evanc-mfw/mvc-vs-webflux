@@ -17,13 +17,13 @@ class GameClient(
 ) {
     private val gameEndpoint = "/switch/games"
 
-    fun getLatestGame(host: String?) : Mono<GameResponse> {
+    fun getLatestGame(maxId: Int? = null, host: String?) : Mono<GameResponse> {
         val staticPath = "${host ?: gameHost}$gameEndpoint"
         val metric = metricService.startMetric(staticPath)
 
         try {
             return webClient.get()
-                .uri("$staticPath/${Random.nextInt(1000)}")
+                .uri("$staticPath/${Random.nextInt(maxId ?: 1000)}")
                 .retrieve()
                 .bodyToMono(GameResponse::class.java)
         } finally {

@@ -15,14 +15,14 @@ class GameClient(
     private val metricService: MetricService,
     private val restTemplate: RestTemplate,
     @Value("\${hosts.games}")
-    private val gameHost: String
+    private val gameHost: String,
 ) {
     private val gameEndpoint = "/switch/games"
 
-    fun getLatestGame(host: String?) : GameResponse? {
+    fun getLatestGame(maxId: Int?, host: String?) : GameResponse? {
         val staticPath = "${host ?: gameHost}$gameEndpoint"
         val request = RequestEntity.get(
-            "$staticPath/${Random.nextInt(1000)}"
+            "$staticPath/${Random.nextInt(maxId ?: 1000)}"
         ).build()
         val metric = metricService.startMetric(staticPath)
 

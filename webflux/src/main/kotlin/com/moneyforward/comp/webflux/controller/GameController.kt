@@ -26,10 +26,12 @@ class GameController(
     fun latestGames(
         @RequestParam(required = false)
         count: Int = 3,
+        @RequestParam(required = false)
+        maxId: Int? = null,
         @RequestHeader("Api-Host")
         host: String? = null
     ): Mono<ResponseEntity<List<GameResponse>>> {
-        val games = gameService.getLatestGames(count, host)
+        val games = gameService.getLatestGames(count, maxId, host)
         return games.map {
             if (it.isEmpty()) {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(emptyList())

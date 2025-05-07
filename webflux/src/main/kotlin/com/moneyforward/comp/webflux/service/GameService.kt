@@ -13,9 +13,9 @@ class GameService(
     private val gameClient: GameClient,
     private val gameMetricService: GameMetricService
 ) {
-    fun getLatestGames(count: Int, host: String?): Mono<List<GameResponse>> {
+    fun getLatestGames(count: Int, maxId: Int?, host: String?): Mono<List<GameResponse>> {
         val gameStream = Flux.merge(
-            (0..<count).map { gameClient.getLatestGame(host) }
+            (0..<count).map { gameClient.getLatestGame(maxId, host) }
         )
         return gameStream
             .onErrorResume { err ->

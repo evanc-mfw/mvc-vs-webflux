@@ -22,9 +22,11 @@ class GameController(
     @GetMapping("/latest")
     fun latestGames(
         @RequestParam(required = false)
-        count: Int = 3
+        count: Int = 3,
+        @RequestParam(required = false)
+        maxId: Int? = null
     ): ResponseEntity<List<GameResponse>> {
-        val games = gameService.getLatestGames(count)
+        val games = gameService.getLatestGames(maxId, count)
         var containsNulls = false
 
         val nonNullGames = mutableListOf<GameResponse>()

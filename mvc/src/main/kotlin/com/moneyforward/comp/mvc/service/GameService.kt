@@ -16,7 +16,7 @@ class GameService(
     private val gameClient: GameClient,
     private val gameMetricService: GameMetricService,
 ) {
-    fun getLatestGames(count: Int): List<GameResponse?> {
+    fun getLatestGames(maxId: Int?, count: Int): List<GameResponse?> {
         val host = DebugHostContext.host
         val context = MDC.getCopyOfContextMap()
         val games = runBlocking {
@@ -24,7 +24,7 @@ class GameService(
                 (0..<count).map {
                     async {
                         MDC.setContextMap(context)
-                        gameClient.getLatestGame(host)
+                        gameClient.getLatestGame(maxId, host)
                     }
                 }.awaitAll()
             }
